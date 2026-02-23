@@ -34,22 +34,22 @@ No image loading yet — this version proves the config schema works end-to-end.
 Implement the image layer: PNG decoding from `fs.FS`, sub-rect extraction,
 transparency/background processing, and the image cache.
 
-- [ ] Create `image.go`:
+- [x] Create `image.go`:
   - `loadImage(fsys fs.FS, path string) (image.Image, error)` — decode PNG from filesystem
   - `extractRect(img image.Image, x, y, w, h int) (image.Image, error)` — sub-rect extraction with bounds validation
   - `applyTransparency(img image.Image, transparent bool, background string) *image.NRGBA` — apply transparency rules (preserve alpha / fill with color / fill with white)
   - `parseHexColor(hex string) (color.NRGBA, error)` — parse `#RRGGBB` or `#RGB` hex color strings
   - `toEbitenImage(img image.Image) *ebiten.Image` — convert standard image to ebiten image
   - Image cache: `map[string]image.Image` keyed by file path, shared within a single `Load` call
-- [ ] Create `image_test.go`:
+- [x] Create `image_test.go`:
   - Test PNG decoding from `os.DirFS("testdata/...")`
   - Test sub-rect extraction: valid rect, out-of-bounds rect (error)
   - Test transparency: transparent=true preserves alpha, background fills correct color, default fills white
   - Test hex color parsing: `#FF0000`, `#f00`, invalid strings
-- [ ] Create `testdata/valid/single.png` — small test image (e.g. 8x8 with known pixel values)
-- [ ] Create `testdata/valid/sheet.png` — small sprite sheet (e.g. 32x8, four 8x8 frames)
-- [ ] Create `testdata/minimal/pixel.png` — 1x1 RGBA pixel for smoke tests
-- [ ] Verify: `make test` passes
+- [x] Create `testdata/valid/single.png` — small test image (e.g. 8x8 with known pixel values)
+- [x] Create `testdata/valid/sheet.png` — small sprite sheet (e.g. 32x8, four 8x8 frames)
+- [x] Create `testdata/minimal/pixel.png` — 1x1 RGBA pixel for smoke tests
+- [x] Verify: `make test` passes
 
 ---
 
