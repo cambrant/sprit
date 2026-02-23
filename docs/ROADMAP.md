@@ -57,25 +57,25 @@ transparency/background processing, and the image cache.
 
 Wire up the `Sprite` type with its draw methods and connect it to the Atlas.
 
-- [ ] Create `sprite.go`:
+- [x] Create `sprite.go`:
   - `Sprite` struct: `Name`, `Image *ebiten.Image`, `W`, `H`
   - `Draw(screen *ebiten.Image, x, y float64)` — draw at position
   - `DrawWithOptions(screen *ebiten.Image, opts *ebiten.DrawImageOptions)` — draw with full control
   - `Bounds() (w, h int)` — return dimensions
-- [ ] Create `sprite_test.go`:
+- [x] Create `sprite_test.go`:
   - Test `Bounds()` returns correct dimensions
   - Test `Draw` and `DrawWithOptions` produce expected output (verify draw call doesn't panic, spot-check pixel placement on a small offscreen image)
-- [ ] Create `sprit.go` (partial — sprite loading only):
+- [x] Create `sprit.go` (partial — sprite loading only):
   - `Atlas` struct with `sprites map[string]*Sprite` and `images` cache
   - `Load(fsys fs.FS) (*Atlas, error)` — walk fs, discover HCL, parse, load sprites only (animations deferred to next version)
   - `Sprite(name string) *Sprite` — lookup by name
   - `Sprites() []string` — list all names
   - Internal: `buildSprite(cfg spriteConfig, cache) (*Sprite, error)` — orchestrate image loading + processing for one sprite config
-- [ ] Create `sprit_test.go` (partial):
+- [x] Create `sprit_test.go` (partial):
   - Load atlas from `testdata/valid/` — verify sprite count, lookup by name, nil for missing name
   - Load from `testdata/invalid/` — verify errors
-- [ ] Create `testdata/minimal/one.hcl` — minimal sprite definition pointing at `pixel.png`
-- [ ] Verify: `make test` passes
+- [x] Create `testdata/minimal/one.hcl` — minimal sprite definition pointing at `pixel.png`
+- [x] Verify: `make test` passes
 
 ---
 

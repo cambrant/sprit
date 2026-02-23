@@ -396,9 +396,10 @@ sprit/
     │   ├── single.png      # Single sprite image
     │   └── sheet.png       # Sprite sheet with multiple frames
     ├── invalid/
+    │   ├── bad_mode.hcl    # Invalid animation mode
+    │   ├── bad_rect.hcl    # Invalid rect dimensions
     │   ├── bad_syntax.hcl  # Malformed HCL
-    │   ├── missing_file.hcl# References non-existent image
-    │   └── bad_rect.hcl    # Invalid rect dimensions
+    │   └── conflict.hcl    # transparent + background conflict
     └── minimal/
         ├── one.hcl         # Minimal valid config for smoke tests
         └── pixel.png       # 1x1 or small test image
