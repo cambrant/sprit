@@ -140,7 +140,7 @@ Add the convenience drawing helpers and `TickDelta`.
 Final documentation pass. Ensure the library is ready for use in a real game
 project.
 
-- [ ] Create `README.md`:
+- [x] Create `README.md`:
   - Project purpose and one-sentence description
   - Install: `go get github.com/cambrant/sprit`
   - Quick start example (embed assets, load atlas, draw sprite, animate)
@@ -148,12 +148,12 @@ project.
   - API overview table
   - Transparency rules summary
   - Utility functions list
-- [ ] Review and finalize `docs/ARCHITECTURE.md` — ensure it matches the actual implementation
-- [ ] Review all exported types and functions have GoDoc comments
-- [ ] Run `go vet ./...` and fix any warnings
-- [ ] Run `make test-coverage` and verify reasonable coverage (target: >80%)
+- [x] Review and finalize `docs/ARCHITECTURE.md` — ensure it matches the actual implementation
+- [x] Review all exported types and functions have GoDoc comments
+- [x] Run `go vet ./...` and fix any warnings
+- [x] Run `make test-coverage` and verify reasonable coverage (target: >80%)
 - [ ] Tag `v0.6.0` (or `v0.1.0` public if ready for consumers)
-- [ ] Verify: `make test` passes
+- [x] Verify: `make test` passes
 
 ---
 

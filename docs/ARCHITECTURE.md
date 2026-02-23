@@ -84,7 +84,7 @@ No other external dependencies.
 │  │   └── Sprite { Name, Image, W, H }                   │
 │  ├── animations map[string]*Animation                    │
 │  │   └── Animation { Name, Frames[], Mode, Speed, ... } │
-│  └── images     map[string]*ebiten.Image  (cache)        │
+│  └── images     map[string]image.Image  (cache)         │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -168,7 +168,7 @@ Frames are extracted left-to-right from the sprite sheet at the given row.
 type Atlas struct {
     sprites    map[string]*Sprite
     animations map[string]*Animation
-    images     map[string]*ebiten.Image // loaded image cache, keyed by file path
+    images     imageCache // map[string]image.Image — loaded image cache, keyed by file path
 }
 
 // Sprite represents a single static image, accessible by name.
