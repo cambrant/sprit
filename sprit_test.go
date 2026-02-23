@@ -144,3 +144,113 @@ func TestLoad_SpriteFullImage(t *testing.T) {
 		t.Errorf("rock.Bounds() = (%d, %d), want (8, 8)", w, h)
 	}
 }
+
+func TestLoad_ValidAnimations(t *testing.T) {
+	fsys := os.DirFS("testdata/valid")
+	atlas, err := Load(fsys)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	// Should have 3 animations from animations.hcl.
+	names := atlas.Animations()
+	if len(names) != 3 {
+		t.Fatalf("expected 3 animations, got %d: %v", len(names), names)
+	}
+
+	// Verify known animations.
+	for _, name := range []string{"player_walk", "player_die", "player_bounce"} {
+		a := atlas.Animation(name)
+		if a == nil {
+			t.Errorf("Animation(%q) = nil, want non-nil", name)
+			continue
+		}
+		if a.Name != name {
+			t.Errorf("Animation(%q).Name = %q", name, a.Name)
+		}
+		if len(a.Frames) != 4 {
+			t.Errorf("Animation(%q) has %d frames, want 4", name, len(a.Frames))
+		}
+	}
+}
+
+func TestLoad_AnimationLookupMissing(t *testing.T) {
+	fsys := os.DirFS("testdata/valid")
+	atlas, err := Load(fsys)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	a := atlas.Animation("nonexistent")
+	if a != nil {
+		t.Errorf("Animation(\"nonexistent\") = %v, want nil", a)
+	}
+}
+
+func TestLoad_AnimationIndependentInstances(t *testing.T) {
+	fsys := os.DirFS("testdata/valid")
+	atlas, err := Load(fsys)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	a1 := atlas.Animation("player_walk")
+	a2 := atlas.Animation("player_walk")
+	if a1 == nil || a2 == nil {
+		t.Fatal("expected non-nil animations")
+	}
+
+	// They should be separate instances.
+	if a1 == a2 {
+		t.Error("two calls to Animation() returned the same pointer")
+	}
+
+	// Advancing one should not affect the other.
+	a1.Update(a1.Speed)
+	if a1.Frame() == a2.Frame() {
+		t.Error("after advancing a1, a1.Frame() should differ from a2.Frame()")
+	}
+}
+
+func TestLoad_AnimationModes(t *testing.T) {
+	fsys := os.DirFS("testdata/valid")
+	atlas, err := Load(fsys)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	tests := []struct {
+		name string
+		mode AnimationMode
+	}{
+		{"player_walk", AnimLoop},
+		{"player_die", AnimOnce},
+		{"player_bounce", AnimPingPong},
+	}
+	for _, tt := range tests {
+		a := atlas.Animation(tt.name)
+		if a == nil {
+			t.Errorf("Animation(%q) = nil", tt.name)
+			continue
+		}
+		if a.Mode != tt.mode {
+			t.Errorf("Animation(%q).Mode = %d, want %d", tt.name, a.Mode, tt.mode)
+		}
+	}
+}
+
+func TestLoad_AnimationsListSorted(t *testing.T) {
+	fsys := os.DirFS("testdata/valid")
+	atlas, err := Load(fsys)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	names := atlas.Animations()
+	for i := 1; i < len(names); i++ {
+		if names[i] < names[i-1] {
+			t.Errorf("Animations() not sorted: %v", names)
+			break
+		}
+	}
+}

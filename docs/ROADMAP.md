@@ -84,7 +84,7 @@ Wire up the `Sprite` type with its draw methods and connect it to the Atlas.
 Implement the `Animation` type with frame extraction and the three playback
 modes (once, loop, ping-pong).
 
-- [ ] Create `animation.go`:
+- [x] Create `animation.go`:
   - `AnimationMode` type and constants: `AnimOnce`, `AnimLoop`, `AnimPingPong`
   - `Animation` struct: `Name`, `Frames`, `Mode`, `Speed`, `current`, `elapsed`, `direction`, `finished`
   - `Update(dt time.Duration)` — advance animation state
@@ -94,24 +94,24 @@ modes (once, loop, ping-pong).
   - `IsFinished() bool` — true only for `AnimOnce` after last frame
   - `Reset()` — restart from first frame
   - Internal: `parseMode(s string) (AnimationMode, error)`
-- [ ] Create `animation_test.go`:
+- [x] Create `animation_test.go`:
   - Test `AnimLoop`: cycles through all frames and wraps back to 0
   - Test `AnimOnce`: advances to last frame, `IsFinished()` returns true, stays on last frame
   - Test `AnimPingPong`: reaches last frame, reverses, reaches first frame, reverses again
   - Test `Reset()`: restores frame 0, clears finished state
   - Test boundary: single-frame animation, `speed=0` is rejected during config validation
   - Test `Frame()` returns correct image at each step
-- [ ] Update `sprit.go`:
+- [x] Update `sprit.go`:
   - Add `animations map[string]*Animation` to `Atlas`
   - Add animation building in `Load()`: extract frames from sprite sheet, create `Animation` objects
   - `Animation(name string) *Animation` — returns a new independent playback instance (clone)
   - `Animations() []string` — list all names
   - Internal: `buildAnimation(cfg animationConfig, cache) (*Animation, error)` — extract frames, validate frame_count vs image width
-- [ ] Update `sprit_test.go`:
+- [x] Update `sprit_test.go`:
   - Load atlas with both sprites and animations
   - Verify animation lookup, independent instances (two calls return separate state)
   - Verify frame count matches expectations from sprite sheet dimensions
-- [ ] Verify: `make test` passes
+- [x] Verify: `make test` passes
 
 ---
 
@@ -119,19 +119,19 @@ modes (once, loop, ping-pong).
 
 Add the convenience drawing helpers and `TickDelta`.
 
-- [ ] Create `util.go`:
+- [x] Create `util.go`:
   - `TickDelta() time.Duration` — `time.Second / time.Duration(ebiten.TPS())`
   - `DrawCentered(screen, img *ebiten.Image, cx, cy float64)`
   - `DrawScaled(screen, img *ebiten.Image, x, y, scale float64)`
   - `DrawRotated(screen, img *ebiten.Image, x, y, angle float64)`
   - `FlipH(img *ebiten.Image) *ebiten.Image`
   - `FlipV(img *ebiten.Image) *ebiten.Image`
-- [ ] Create `util_test.go`:
+- [x] Create `util_test.go`:
   - Test `FlipH`: verify pixel at (0,0) moves to (w-1,0)
   - Test `FlipV`: verify pixel at (0,0) moves to (0,h-1)
   - Test `DrawCentered`, `DrawScaled`, `DrawRotated`: verify draw calls complete without panic, spot-check that output image is non-empty
   - Test `TickDelta`: returns a positive duration
-- [ ] Verify: `make test` passes
+- [x] Verify: `make test` passes
 
 ---
 
