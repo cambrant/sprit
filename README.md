@@ -2,7 +2,7 @@
 
 A minimal Go library for managing 2D sprite and animation assets in
 [Ebitengine](https://ebitengine.org) games. Define sprites and animations in HCL
-metadata files, point them at your PNG sprite sheets, and access everything by
+metadata files, point them at PNG sprite sheets, and access everything by
 name through a single `Atlas` type.
 
 ## Install
@@ -68,7 +68,7 @@ func main() {
 }
 ```
 
-Create HCL files alongside your images in the embedded directory:
+Create HCL files alongside images in the embedded directory:
 
 ```hcl
 # assets/sprites.hcl
